@@ -1,5 +1,6 @@
 const express = require("express") //importing the libraray
 const res = require("express/lib/response")
+const PORT = process.env.PORT || 3001;
 const app = express() //instantiating the server
 
 
@@ -53,6 +54,6 @@ app.get("/api/animals",(req,res)=>{
 })
 
 
-app.listen(3000, ()=>{
-    console.log("API server now on 3000 port")
+app.listen(PORT, ()=>{
+    console.log(`API server now on ${PORT} port`)
 })
