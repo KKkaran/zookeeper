@@ -2,7 +2,12 @@ const express = require("express") //importing the libraray
 const res = require("express/lib/response")
 const PORT = process.env.PORT || 3001;
 const app = express() //instantiating the server
-
+// parse incoming string or array data
+app.use(express.urlencoded({ extended: true }));
+// parse incoming JSON data
+app.use(express.json());
+const fs = require('fs');
+const path = require('path');
 
 const {animals} = require("./data/animals.json")
 function filterByQuery(query,animalsArray){
@@ -43,8 +48,24 @@ function filterByQuery(query,animalsArray){
     }
     return filteredResults
 }
+function findById(id,animal){
+
+    let anima = animal.filter(ani=> ani.id === id)
+    return anima;
+
+}
+function createNewAnimal(body, animalsArray) {
+    console.log(body);
+    // our function's main code will go here!
+    animalsArray.push(body)
+    fs.writeFileSync(
+        path.join(__dirname, './data/animals.json'),
+        JSON.stringify({ animals: animalsArray }, null, 2)
+      );
+    // return finished code to post route for response
+    return body;
+  }
 app.get("/api/animals",(req,res)=>{
-    
     let results = animals;
     if(req.query){
         console.log(req.query)
@@ -52,8 +73,23 @@ app.get("/api/animals",(req,res)=>{
     }
     res.json(results)
 })
+//route using params
+app.get('/api/animals/:id', (req, res) => {
+    const result = findById(req.params.id, animals);
+      if(result) res.json(result)
+      else res.send(404)
+  });
 
+app.post('/api/animals', (req, res) => {
+    // req.body is where our incoming content will be
+    req.body.id = animals.length.toString();
+    const animal = createNewAnimal(req.body, animals);
+    res.json(req.body);
+
+});
 
 app.listen(PORT, ()=>{
     console.log(`API server now on ${PORT} port`)
 })
+
+console.log(__dirname + "-------------------> current dir")
