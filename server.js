@@ -1,11 +1,12 @@
 const express = require("express") //importing the libraray
-const res = require("express/lib/response")
 const PORT = process.env.PORT || 3001;
 const app = express() //instantiating the server
 // parse incoming string or array data
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
 // parse incoming JSON data
 app.use(express.json());
+
 const fs = require('fs');
 const path = require('path');
 
@@ -64,7 +65,12 @@ function createNewAnimal(body, animalsArray) {
       );
     // return finished code to post route for response
     return body;
-  }
+}
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/index.html'));
+});
+
 app.get("/api/animals",(req,res)=>{
     let results = animals;
     if(req.query){
@@ -80,7 +86,7 @@ app.get('/api/animals/:id', (req, res) => {
       else res.send(404)
   });
 
-app.post('/api/animals', (req, res) => {
+app.post('/api/animals', (req, res) => {e
     // req.body is where our incoming content will be
     req.body.id = animals.length.toString();
     const animal = createNewAnimal(req.body, animals);

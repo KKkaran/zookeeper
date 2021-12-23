@@ -117,6 +117,17 @@
         "hungry"
       ],
       "id": "11"
+    },
+    {
+      "name": "Karan",
+      "species": "Liger",
+      "diet": "carnivore",
+      "personalityTraits": [
+        "Funny",
+        "tenacious",
+        "ruthless"
+      ],
+      "id": "12"
     }
   ]
 }
