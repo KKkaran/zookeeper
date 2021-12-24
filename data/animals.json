@@ -128,6 +128,25 @@
         "ruthless"
       ],
       "id": "12"
+    },
+    {
+      "name": "Bobin",
+      "species": "Bhalu",
+      "diet": "carnivore",
+      "personalityTraits": [
+        "hungry",
+        "goofy"
+      ],
+      "id": "13"
+    },
+    {
+      "name": "Karan",
+      "species": "Human",
+      "diet": "herbivore",
+      "personalityTraits": [
+        "loving"
+      ],
+      "id": "14"
     }
   ]
 }

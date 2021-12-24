@@ -70,7 +70,15 @@ function createNewAnimal(body, animalsArray) {
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, './public/index.html'));
 });
-
+app.get('/animals', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/animals.html'));
+});
+app.get('/zookeepers', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/zookeepers.html'));
+});
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/index.html'));
+  });
 app.get("/api/animals",(req,res)=>{
     let results = animals;
     if(req.query){
@@ -86,11 +94,12 @@ app.get('/api/animals/:id', (req, res) => {
       else res.send(404)
   });
 
-app.post('/api/animals', (req, res) => {e
+app.post('/api/animals', (req, res) => {
     // req.body is where our incoming content will be
     req.body.id = animals.length.toString();
     const animal = createNewAnimal(req.body, animals);
-    res.json(req.body);
+    //res.json(req.body);
+    res.redirect("/")
 
 });
 
